@@ -3,7 +3,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Копируем зависимости
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml ./
 COPY app ./app
 
 # Устанавливаем uv и зависимости
