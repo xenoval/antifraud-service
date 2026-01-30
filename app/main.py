@@ -7,6 +7,23 @@ import time
 
 app = FastAPI(title="Antifraud Service")
 
+@app.get("/")
+async def root():
+    return {
+        "message": "Anti-Fraud Service",
+        "endpoints": {
+            "docs": "/docs",
+            "health": "/health",
+            "check": "/check",
+            "metrics": "/metrics"
+        }
+    }
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "anti-fraud"}
+
+
 app.mount("/metrics", metrics_app)
 app.include_router(healthz_router)
 
