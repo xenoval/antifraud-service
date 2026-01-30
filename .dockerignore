@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.local
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.*.yml
+prometheus_data/
+grafana_data/
+redis_data/
+
+# Project specific
+antifraud.log
+old_*.py
+*_backup.py
