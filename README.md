@@ -1,8 +1,8 @@
-# 🛡️ Anti-Fraud Service API
+# Anti-Fraud Service API
 
 Микросервис для проверки клиентов на мошенничество с кэшированием в Redis и мониторингом через Prometheus+Grafana.
 
-## 🚀 Быстрый старт
+## Быстрый старт
 
 ```bash
 # 1. Запуск всех сервисов
@@ -15,7 +15,7 @@ docker-compose up app redis
 docker-compose -f docker-compose.yml -f docker-compose.grafana.yml up
 ```
 
-## 📡 API
+## API
 
 ### Основные эндпоинты:
 - `GET /` - информация о сервисе
@@ -39,7 +39,7 @@ curl -X POST "http://localhost:8000/check" \
   }'
 ```
 
-## 📊 Мониторинг
+## Мониторинг
 
 | Сервис | URL | Порт |
 |--------|-----|------|
@@ -50,7 +50,7 @@ curl -X POST "http://localhost:8000/check" \
 
 **Логин в Grafana:** admin / admin123
 
-## 🧪 Тестирование
+## Тестирование
 
 ```bash
 # Запуск тестов
@@ -60,7 +60,7 @@ pytest tests/ -v
 pytest --cov=app --cov-report=html tests/
 ```
 
-## 📁 Структура
+## Структура
 
 ```
 test_app/
@@ -75,7 +75,7 @@ test_app/
 └── pyproject.toml        # Зависимости
 ```
 
-## 🔧 Бизнес-логика
+## Бизнес-логика
 
 Проверяет:
 1. **Телефон** - начинается с +7 или 8
@@ -84,7 +84,7 @@ test_app/
 
 **Результаты кэшируются в Redis на 1 час.**
 
-## 🛠️ Зависимости
+## Зависимости
 
 Установка:
 ```bash
@@ -96,7 +96,7 @@ pip install -e .
 - Prometheus-client, Uvicorn
 - Pytest (для разработки)
 
-## 📝 Конфигурация
+## Конфигурация
 
 Скопируйте `.env.example` в `.env`:
 ```env
@@ -107,5 +107,3 @@ LOG_LEVEL=INFO
 ```
 
 ---
-
-**Проект готов к использованию!** Запускайте, тестируйте, мониторьте. 🚀
