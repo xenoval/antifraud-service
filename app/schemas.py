@@ -3,21 +3,20 @@ from datetime import datetime
 
 
 class Loan(BaseModel):
-    amount: int
-    loan_data: str
-    # В документации именно loan_data
+    loan_amount: int
+    loan_date: str
     is_closed: bool
 
-    @field_validator('loan_data')
-    def validate_loan_data(cls, v):
+    @field_validator('loan_date')
+    def validate_loan_date(cls, v):
         try:
             datetime.strptime(v, '%d.%m.%Y')
             return v
         except ValueError:
             raise ValueError('Date must be in format dd.mm.yyyy')
 
-    @field_validator('amount')
-    def validate_amount(cls, v):
+    @field_validator('loan_amount')
+    def validate_loan_amount(cls, v):
         if v <=0:
             raise ValueError('Amount must be positive')
         return v

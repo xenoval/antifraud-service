@@ -6,13 +6,13 @@
 
 ```bash
 # 1. Запуск всех сервисов
-docker-compose up --build
+docker compose up --build
 
 # 2. Только приложение + Redis
-docker-compose up app redis
+docker compose up antifraud-service redis
 
 # 3. С мониторингом
-docker-compose -f docker-compose.yml -f docker-compose.grafana.yml up
+docker compose -f docker-compose.yml -f docker-compose.grafana.yml up
 ```
 
 ## API
@@ -39,6 +39,9 @@ curl -X POST "http://localhost:8000/check" \
   }'
 ```
 
+### Ответы /check
+Эндпоинт всегда возвращает 200 OK, если запрос валиден, — независимо от результата проверки. Решение о пропуске или отказе закодировано в теле ответа (result), а не в HTTP-статусе.
+
 ## Мониторинг
 
 | Сервис | URL | Порт |
@@ -48,7 +51,7 @@ curl -X POST "http://localhost:8000/check" \
 | Prometheus | http://localhost:9090 | 9090 |
 | Grafana | http://localhost:3000 | 3000 |
 
-**Логин в Grafana:** admin / admin123
+**Логин в Grafana:** admin / значение переменной GRAFANA_ADMIN_PASSWORD из .env.
 
 ## Тестирование
 
@@ -63,16 +66,30 @@ pytest --cov=app --cov-report=html tests/
 ## Структура
 
 ```
-test_app/
-├── app/                    # Код приложения
-│   ├── main.py            # FastAPI приложение
-│   ├── logic.py           # Бизнес-логика проверок
-│   ├── redis_client.py    # Redis кэширование
-│   └── schemas.py         # Pydantic схемы
-├── tests/                 # Тесты
-├── docker-compose.yml     # Docker конфигурация
-├── Dockerfile            # Образ приложения
-└── pyproject.toml        # Зависимости
+antifraud-service/
+├── app/
+│   ├── __init__.py            
+│   ├── config.py              # Конфигурация приложения
+│   ├── healthz.py             # Эндпоинт проверки работоспособности сервиса (health checks)
+│   ├── logger.py              # Настройка логирования
+│   ├── logic.py               # Бизнес-логика приложения
+│   ├── main.py                # Точка входа приложения
+│   ├── metrics.py             # Метрики Prometheus для мониторинга
+│   ├── redis_client.py        # Клиент для подключения к Redis
+│   └── schemas.py             # Pydantic-схемы
+├── tests/
+│   ├── __init__.py            
+│   └── test_main.py           # Тесты для основного функционала приложения
+├── .dockerignore              # Исключения файлов при сборке Docker-образа
+├── .env.example               # Пример файла с переменными окружения
+├── .gitignore                 # Исключения файлов для Git
+├── .python-version            # Версия Python
+├── Dockerfile                 # Инструкции для сборки Docker-образа приложения
+├── README.md                  
+├── docker-compose.grafana.yml # Docker Compose для запуска Grafana
+├── docker-compose.yml         # Основной Docker Compose
+├── prometheus.yml             # Конфигурация Prometheus для сбора метрик
+└── pyproject.toml             # Метаданные проекта и зависимости
 ```
 
 ## Бизнес-логика

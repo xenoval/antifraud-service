@@ -84,8 +84,3 @@ old_*.py
 *_backup.py
 *.tmp
 *.temp
-
-# Poetry/UV
-poetry.lock
-uv.lock
-.uv/

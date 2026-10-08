@@ -11,8 +11,8 @@ def test_check_fraud_success():
         "phone_number": "+79235648563",
         "loans_history": [
             {
-                "amount": 10000,
-                "loan_data": "22.10.2023",
+                "loan_amount": 10000,
+                "loan_date": "22.10.2023",
                 "is_closed": True
             }
         ]
@@ -65,8 +65,8 @@ def test_check_fraud_unclosed_loan():
         "phone_number": "+79235648563",
         "loans_history": [
             {
-                "amount": 10000,
-                "loan_data": "22.10.2023",
+                "loan_amount": 10000,
+                "loan_date": "22.10.2023",
                 "is_closed": False  # Незакрытый!
             }
         ]
