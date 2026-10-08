@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Response, status
 
-
 router = APIRouter(
     prefix="/healthz",
     tags=["system"],
 )
+
 
 @router.get("/live")
 async def liveness_probe() -> Response:

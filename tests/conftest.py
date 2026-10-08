@@ -1,5 +1,7 @@
 import json
+
 import pytest
+
 import app.logic as logic
 
 
@@ -15,6 +17,7 @@ class FakeRedis:
 
     def set_cached_result(self, key, value, ttl=None):
         self.store[key] = value
+
 
 @pytest.fixture(autouse=True)
 def fake_redis(monkeypatch):

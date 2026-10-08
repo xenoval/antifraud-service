@@ -1,5 +1,6 @@
-from pydantic import BaseModel, field_validator
 from datetime import datetime
+
+from pydantic import BaseModel, field_validator
 
 
 class Loan(BaseModel):
@@ -7,32 +8,34 @@ class Loan(BaseModel):
     loan_date: str
     is_closed: bool
 
-    @field_validator('loan_date')
+    @field_validator("loan_date")
     def validate_loan_date(cls, v):
         try:
-            datetime.strptime(v, '%d.%m.%Y')
+            datetime.strptime(v, "%d.%m.%Y")
             return v
         except ValueError:
-            raise ValueError('Date must be in format dd.mm.yyyy')
+            raise ValueError("Date must be in format dd.mm.yyyy") from None
 
-    @field_validator('loan_amount')
+    @field_validator("loan_amount")
     def validate_loan_amount(cls, v):
-        if v <=0:
-            raise ValueError('Amount must be positive')
+        if v <= 0:
+            raise ValueError("Amount must be positive")
         return v
+
 
 class AntifraudRequest(BaseModel):
     birth_date: str
     phone_number: str
     loans_history: list[Loan]
 
-    @field_validator('birth_date')
+    @field_validator("birth_date")
     def validate_birth_date(cls, v):
         try:
-            datetime.strptime(v, '%d.%m.%Y')
+            datetime.strptime(v, "%d.%m.%Y")
             return v
         except ValueError:
-            raise ValueError('Date must be in format dd.mm.yyyy')
+            raise ValueError("Date must be in format dd.mm.yyyy") from None
+
 
 class AntifraudResponse(BaseModel):
     stop_factors: list[str]
