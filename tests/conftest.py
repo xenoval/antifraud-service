@@ -1,16 +1,12 @@
-import json
-
 import pytest
 
 import app.logic as logic
+from app.redis_client import RedisClient
 
 
-class FakeRedis:
+class FakeRedisClient(RedisClient):
     def __init__(self):
-        self.store = {}
-
-    def generate_key(self, data):
-        return json.dumps(data, sort_keys=True)
+        self.store: dict = {}
 
     def get_cached_result(self, key):
         return self.store.get(key)
@@ -21,4 +17,6 @@ class FakeRedis:
 
 @pytest.fixture(autouse=True)
 def fake_redis(monkeypatch):
-    monkeypatch.setattr(logic, "redis_client", FakeRedis())
+    fake = FakeRedisClient()
+    monkeypatch.setattr(logic, "redis_client", fake)
+    return fake

@@ -1,17 +1,16 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from app.logger import logger
 from app.redis_client import redis_client
 from app.schemas import AntifraudRequest, AntifraudResponse
 
 
-def calculate_age(birthdate_str) -> int:
+def calculate_age(birthdate_str: str, today: date | None = None) -> int:
     birthdate = datetime.strptime(birthdate_str, "%d.%m.%Y").date()
-    today = datetime.now().date()
+    today = today or date.today()
 
-    age = (
-        today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-    )
+    had_birthday = (today.month, today.day) >= (birthdate.month, birthdate.day)
+    age = today.year - birthdate.year - (0 if had_birthday else 1)
     return age
 
 
